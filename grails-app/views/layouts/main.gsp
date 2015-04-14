@@ -16,11 +16,12 @@
     <asset:stylesheet src="font-awesome.min.css"/>
     <!-- JavaScript -->
     <asset:javascript src="jquery-1.10.2.js"/>
+
     <asset:javascript src="bootstrap.js"/>
     <g:layoutHead/>
 </head>
 
-<body>
+<body ng-app="todoApp" >
 
 <div id="wrapper">
 

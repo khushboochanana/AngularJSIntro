@@ -18,7 +18,7 @@ environments {
     development {
         dataSource {
             dbCreate = "create-drop" // one of 'create', 'create-drop', 'update', 'validate', ''
-            url = "jdbc:mysql://localhost/angular_todo?autoReconnect=true"
+            url =  "jdbc:mysql://localhost:3306/Todo?autoReconnect=true"
         }
     }
     test {

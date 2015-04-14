@@ -1,8 +1,10 @@
 package com.intelligrape.intellimeet
 
-import grails.rest.Resource
+import org.springframework.security.access.annotation.Secured
 
-@Resource(uri = "/api/todo", formats = ['json', 'xml'])
+import grails.rest.Resource
+//@Secured('permitAll')
+@Resource(uri = "/rest/api/todo", formats = ['json', 'xml'])
 class Todo {
     String task
     Boolean completed = false
@@ -10,7 +12,7 @@ class Todo {
     Long lastUpdated
     Priority priority = Priority.LOW
 
-//    static belongsTo = [collection: TodoGroup]
+    static belongsTo = [collection: TodoGroup]
 
     def beforeInsert = {
         dateCreated = lastUpdated = new Date().time

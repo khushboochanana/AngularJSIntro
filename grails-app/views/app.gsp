@@ -1,52 +1,93 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<%@ page contentType="text/html;charset=UTF-8" %>
+<html ng-app="myApp">
 <head>
-    <meta name="layout" content="main"/>
-    <title>Dashboard</title>
     <style>
-        .strikethrough  {text-decoration: line-through}
+    .ng-invalid.ng-dirty {
+        border-color: #FA787E;
+    }
+
+    .ng-valid.ng-dirty {
+        border-color: #78FA89;
+    }
     </style>
+    <meta name="layout" content="main"/>
+    <asset:javascript src="angular-1.2.16.js"/>
+    <asset:javascript src="new.js"/>
+
+    <title></title>
 </head>
 
 <body>
-<div id="page-wrapper">
-    <div class="row">
-        <div class="col-lg-12">
-            <h1> "username" TODO's
-                <small>A Blank Slate</small>
-            </h1>
-        </div>
-    </div>
 
+<div class="row">
+    <div class="main" ng-app="todoApp" ng-controller="UserCtrl">
 
-    <div class="row">
-        <div class="col-lg-6">
-            <form name="createTodo">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">I need to...</h3>
+        <div class="col-md-6">
+            <h1 ng-include="'/includeIt.html'"></h1>
+
+            <div ng-repeat="user in users" style="border: outset;height:auto">
+                <em>{{user.name}}</em>
+                <img ng-src="{{user.image}}" style="float: right"/>
+                <b ng-repeat="i in amount|orderBy">{{i}}&nbsp;</b>
+                {{store}}
+                <div ng-controller="PanelCtrl" color>
+                    <ul class="nav nav-pills">
+                        <li ng-class="{active:isSelected(1)}"><a ng-click="selectTab(1)" href="#">Description</a></li>
+                        <li ng-class="{active:isSelected(2)}"><a ng-click="selectTab(2)" href="#">Specification</a></li>
+                        <li ng-class="{active:isSelected(3)}"><a ng-click="selectTab(3)" href="#">Reviews</a></li>
+                    </ul>
+
+                    <div class="panel" ng-show="isSelected(1)">
+                        <h4>Description</h4>
+
+                        <p>None</p>
                     </div>
-                    <div class="panel-body">
-                        <div class="form-group">
-                            <input name="task" class="form-control" placeholder="Enter text" >
+
+                    <div class="panel" ng-show="isSelected(2)">
+                        <h4>Specifications</h4>
+                        <blockquote>None yet</blockquote>
+                    </div>
+
+
+                    <div class="panel" ng-show="isSelected(3)">
+                        <h4>Reviews</h4>
+
+                        <div ng-repeat="review in user.reviews">
+                            <blockquote>
+                                <b>Stars: {{review.stars}}</b>
+                                {{review.body}}
+                                <cite>by: {{review.author}}</cite>
+                            </blockquote>
                         </div>
-                        <input type="submit" class="btn btn-success" value="Create"/>
+                        <input ng-model="review.terms" type="checkbox"/> I agree to the terms  {{review.terms}}
+                        <form name="reviewForm" ng-controller="ReviewCtrl"
+                              ng-submit="reviewForm.$valid && addReview(user)" novalidate>
+                            <blockquote>
+                                <b>Stars: {{review.stars}}</b>
+                                {{review.body}}
+                                <cite>by: {{review.author}}</cite>
+                            </blockquote>
+                            <select ng-model="review.star" required>
+                                <option value="1">1 star</option>
+                                <option value="2">2 stars</option>
+                                <option value="3">3 stars</option>
+                                <option value="4">4 stars</option>
+                                <option value="5">5 stars</option>
+                            </select><br>
+                            <textarea ng-model="review.body" required></textarea><br>
+                            <label>by:</label>
+                            <input type="email" ng-model="review.author" required/>
+                            <input type="submit" value="Submit"/>
+                            Review form validation{{reviewForm.$valid}}
+                        </form>
                     </div>
                 </div>
-            </form>
-        </div>
-        <div class="col-lg-6">
-            <ul class="list-group">
-                <li class="list-group-item">
-                    <span style="float: right"><input type="checkbox" /></span>
-                    <span style="float:right; margin-right:10px">
-                        <input type="button" value="DELETE" class="btn btn-xs btn-danger" >
-                    </span>
-                </li>
-            </ul>
+
+            </div>
         </div>
     </div>
-</div><!-- /#page-wrapper -->
-
+</div>
+</div>
 </body>
 </html>
