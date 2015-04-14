@@ -13,7 +13,7 @@ class BootStrap {
         def testUser = new ToDoUser(username: 'KhushbooChanana', enabled: true,
                 password: 'abcd')
         testUser.save(flush: true)
-/*
+
         ToDoUserToDoRole.create testUser, adminRole, true
 
 
@@ -31,12 +31,9 @@ class BootStrap {
         todo1.save(flush: true)
 
         Todo todo2 = new Todo(task: "sleep", collection: todoGroup)
-        todo2.save(flush: true)*/
-//
-//        Todo.count() == 0 && ["Eat", "Drink", "Be merry", "Scare the world", "Sleep"].each {
-//            Todo.findOrSaveWhere(task: it)
-//        }
-    }
+        todo2.save(flush: true)
+        }
+
     def destroy = {
     }
 }

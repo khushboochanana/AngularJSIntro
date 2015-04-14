@@ -123,17 +123,19 @@ grails.plugin.springsecurity.userLookup.userDomainClassName = 'com.intelligrape.
 grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'com.intelligrape.intellimeet.ToDoUserToDoRole'
 grails.plugin.springsecurity.authority.className = 'com.intelligrape.intellimeet.ToDoRole'
 grails.plugin.springsecurity.controllerAnnotations.staticRules = [
-        '/'                  : ['permitAll'],
+        '/'              : ['permitAll'],
 //        '/index'         : ['permitAll'],
 //        '/index.gsp'     : ['permitAll'],
-        '/assets/**'         : ['permitAll'],
-        '/**/js/**'          : ['permitAll'],
-        '/**/css/**'         : ['permitAll'],
-        '/**/images/**'      : ['permitAll'],
-        '/**/favicon.ico'    : ['permitAll'],
-        '/todo/**'           : ['ROLE_ADMIN'],
-        '/rest/api/todo.json': ['ROLE_ADMIN'],
-        '/rest/api/abcd.json': ['ROLE_ADMIN'],
-        '/todoApp'           : ['ROLE_ADMIN']
+        '/assets/**'     : ['permitAll'],
+        '/**/js/**'      : ['permitAll'],
+        '/**/css/**'     : ['permitAll'],
+        '/**/images/**'  : ['permitAll'],
+        '/**/favicon.ico': ['permitAll'],
+        '/todo/**'       : ['ROLE_ADMIN'],
+        '/todoGroup/**'  : ['ROLE_ADMIN'],
+
+//        '/rest/api/abcd.json': ['ROLE_ADMIN'],
+//        '/rest/api/todo.json': ['ROLE_ADMIN'],
+        '/todoApp'       : ['ROLE_ADMIN']
 ]
 
