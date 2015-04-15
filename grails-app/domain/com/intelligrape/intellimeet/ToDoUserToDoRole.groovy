@@ -41,6 +41,7 @@ class ToDoUserToDoRole implements Serializable {
 
 	static ToDoUserToDoRole create(ToDoUser toDoUser, ToDoRole toDoRole, boolean flush = false) {
 		def instance = new ToDoUserToDoRole(toDoUser: toDoUser, toDoRole: toDoRole)
+        println(instance)
 		instance.save(flush: flush, insert: true)
 		instance
 	}

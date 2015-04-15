@@ -22,10 +22,14 @@
 </head>
 
 <body>
+<script>
+
+    var userId=${sec.loggedInUserInfo(field:"id")};
+</script>
 <div id="page-wrapper" ng-controller="TodoCtrl">
     <div class="row">
         <div class="col-lg-12">
-            <h1>{{userName}} TODO's
+            <h1>${sec.loggedInUserInfo(field:"username")}  TODO's
                 <small>A Blank Slate</small>
             </h1>
         </div>

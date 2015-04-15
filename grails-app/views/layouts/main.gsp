@@ -21,7 +21,7 @@
     <g:layoutHead/>
 </head>
 
-<body ng-app="todoApp" >
+<body ng-app="todoApp">
 
 <div id="wrapper">
 
@@ -50,6 +50,9 @@
                     <a href="#">
                         <i class="fa fa-tasks"></i> Collection's
                     </a>
+                </li>
+                <li>
+                    <g:link controller="logout" class="fa fa-tasks">Logout</g:link>
                 </li>
             </ul>
 

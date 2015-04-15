@@ -2,7 +2,6 @@ package com.intelligrape.intellimeet
 
 import grails.converters.JSON
 import grails.rest.Resource
-import org.springframework.security.access.annotation.Secured
 
 //@Secured('permitAll')
 
@@ -11,6 +10,7 @@ class TodoGroup {
     String ownedBy = 'Khushboo'
     String name
 
+    static belongsTo = [todoUser: ToDoUser]
     static hasMany = [todos: Todo]
 
 
