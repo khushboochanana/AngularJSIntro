@@ -13,8 +13,6 @@ MyApp.controller("TodoCtrl", ['$scope', '$http', '$interval', function ($scope, 
     };
 
 
-    $scope.userName = "Khushboo Chanana";
-
     $scope.addTodo = function (data, priority, collection) {
         var item = {
             task: data,
@@ -104,17 +102,3 @@ MyApp.directive("color", function () {
         }
     }
 });
-//MyApp.filter('matchIt', ['$http', function ($http) {
-//    alert("outside");
-//    return function (item) {
-//        alert(item.id);
-//        alert("inside return");
-//        $http.get('http://localhost:8080/rest/api/todo/' + item.id + '.json').success(function (data) {
-//            alert("inside http");
-//            alert(data);
-//            return data
-//        });
-//    };
-//
-//
-//}]);
