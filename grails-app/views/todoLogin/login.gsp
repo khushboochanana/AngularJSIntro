@@ -1,21 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: intelligrape
-  Date: 14/4/15
-  Time: 5:41 PM
---%>
-
-<%@ page contentType="text/html;charset=UTF-8" %>
-<html>
-<head>
-  <title></title>
-</head>
-<body>
-
-</body>
-</html>
-
-
 <html>
 <head>
     <meta name='layout' content='main'/>
@@ -100,6 +82,41 @@
         height: 12px;
     }
     </style>
+
+    <script>
+        $(document).ready(function () {
+            alert("hiii");
+
+            $(document).on("click", ".loginForm", function () {
+                alert("hiii");
+//                alert($(".loginForm").attr("data-ajax-url"));
+                var username = document.getElementById("j_password").value;
+                var password = document.getElementById("j_username").value;
+                alert(username);
+               alert(password);
+                $.ajax({
+                    url: "http://localhost:8080/api/login",
+                    type:'POST',
+                    data: {
+                        username: username,
+                        password: password
+                    },
+                    success: function (data) {
+                        alert();
+                        alert(JSON.stringify(data))
+                    },
+                    error: function () {
+                        alert("Some Error Occurred")
+                    }
+                });
+                alert("inside")
+            });
+        })
+        ;
+        //        console.log(jQuery.fn.jquery)
+    </script>
+    <asset:javascript src="angular-1.2.16.js"/>
+
 </head>
 
 <body>
@@ -111,17 +128,25 @@
 
                 <g:if test='${flash.message}'>
                     <div class='login_message'>${flash.message}</div>
-                </g:if>
 
-                <form action='${postUrl}' method='POST' id='loginForm' class='cssform' autocomplete='off'>
+                </g:if>
+            %{--<form data-ajax-url="http://localhost:8080/rest/login" class="loginForm">--}%
+            %{--<label for='j_username'>UserName:</label>--}%
+            %{--<input type='text' class='text_' name='j_username' id='j_username'/>--}%
+            %{--<label for='j_password'>Password:</label>--}%
+            %{--<input type='password' class='text_' name='j_password' id='j_password'/>--}%
+            %{--<input type='submit' id="submit" value='Login'/>--}%
+            %{--</form>--}%
+                ${postUrl}
+                <form action='${postUrl}' method='POST' class='loginForm cssform' id='loginForm' autocomplete='off'>
                     <p>
-                        <label for='username'>UserName:</label>
-                        <input type='text' class='text_' name='j_username' id='username'/>
+                        <label for='j_username'>UserName:</label>
+                        <input type='text' class='text_' name='j_username' id='j_username'/>
                     </p>
 
                     <p>
-                        <label for='password'>Password:</label>
-                        <input type='password' class='text_' name='j_password' id='password'/>
+                        <label for='j_password'>Password:</label>
+                        <input type='password' class='text_' name='j_password' id='j_password'/>
                     </p>
 
                     <p id="remember_me_holder">
@@ -131,12 +156,13 @@
                     </p>
 
                     <p>
-                        <input type='submit' id="submit" value='${message(code: "springSecurity.login.button")}'/>
+                        <input type='submit' value='Login'/>
                     </p>
                 </form>
             </div>
         </div>
     </div>
+
     <div class="col-md-6">
         <g:render template="/todoLogin/register"/>
 

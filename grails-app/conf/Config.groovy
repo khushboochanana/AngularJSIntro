@@ -116,22 +116,24 @@ log4j.main = {
             'org.springframework',
             'org.hibernate',
             'net.sf.ehcache.hibernate'
+    debug 'org.springframework.security'
+    debug 'grails.plugin.springsecurity.rest'
 }
 
 // Added by the Spring Security Core plugin:
+
+
 grails.plugin.springsecurity.auth.loginFormUrl = '/todoLogin/login'
-grails.plugin.springsecurity.failureHandler.defaultFailureUrl = '/'
+grails.plugin.springsecurity.successHandler.alwaysUseDefault = true
+grails.plugin.springsecurity.failureHandler.defaultFailureUrl = '/todoLogin/todoApp'
 grails.plugin.springsecurity.successHandler.defaultTargetUrl = '/'
 grails.plugin.springsecurity.logout.postOnly = false
 grails.plugin.springsecurity.logout.afterLogoutUrl = '/'
-
 grails.plugin.springsecurity.userLookup.userDomainClassName = 'com.intelligrape.intellimeet.ToDoUser'
 grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'com.intelligrape.intellimeet.ToDoUserToDoRole'
 grails.plugin.springsecurity.authority.className = 'com.intelligrape.intellimeet.ToDoRole'
 grails.plugin.springsecurity.controllerAnnotations.staticRules = [
         '/'              : ['permitAll'],
-//        '/index'         : ['permitAll'],
-//        '/index.gsp'     : ['permitAll'],
         '/assets/**'     : ['permitAll'],
         '/**/js/**'      : ['permitAll'],
         '/**/css/**'     : ['permitAll'],
@@ -139,9 +141,24 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
         '/**/favicon.ico': ['permitAll'],
         '/todo/**'       : ['ROLE_ADMIN'],
         '/todoGroup/**'  : ['ROLE_ADMIN'],
-        '/toDoUser/**'  : ['ROLE_ADMIN'],
-
+        '/toDoUser/**'   : ['ROLE_ADMIN'],
         '/todoApp'       : ['ROLE_ADMIN'],
-        '/todoLogin/**'  : ['permitAll']
+        '/todoLogin/**'  : ['permitAll'],
+        '/rest/**'       : ['permitAll']
 ]
 
+
+grails.plugin.springsecurity.filterChain.chainMap = [
+        '/rest/**': 'JOINED_FILTERS,-exceptionTranslationFilter,-authenticationProcessingFilter,-securityContextPersistenceFilter,-rememberMeAuthenticationFilter',  // Stateless chain
+        '/**'     : 'JOINED_FILTERS,-restTokenValidationFilter,-restExceptionTranslationFilter'                                                                          // Traditional chain
+]
+
+//grails.plugin.springsecurity.rest.token.validation.useBearerToken = false
+
+grails.plugin.springsecurity.rest.login.active = true
+grails.plugin.springsecurity.rest.login.endpointUrl = '/api/login'
+grails.plugin.springsecurity.rest.logout.endpointUrl = '/rest/logout'
+grails.plugin.springsecurity.rest.login.usernamePropertyName = 'username'
+grails.plugin.springsecurity.rest.login.passwordPropertyName = 'password'
+grails.plugin.springsecurity.rest.token.storage.useGorm = true
+grails.plugin.springsecurity.rest.token.storage.gorm.tokenDomainClassName = 'com.intelligrape.intellimeet.AuthenticationToken'

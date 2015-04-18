@@ -2,7 +2,7 @@ package com.intelligrape.intellimeet
 
 import grails.rest.Resource
 
-@Resource(uri = "/rest/api/user", formats = ['json', 'xml'])
+@Resource(uri = "/rest/user", formats = ['json', 'xml'])
 
 class ToDoUser {
 

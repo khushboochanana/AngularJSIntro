@@ -1,10 +1,13 @@
+
+
+
 var MyApp = angular.module('todoApp', []);
 
 
 MyApp.controller("TodoCtrl", ['$scope', '$http', '$interval', function ($scope, $http, $interval) {
 
     var TodoList = function () {
-        $http.get('http://localhost:8080/rest/api/todo.json').success(function (data) {
+        $http.get('http://localhost:8080/rest/todo.json').success(function (data) {
             $scope.todo = (data);
             return $scope.todo
         }).error(function () {
@@ -20,7 +23,7 @@ MyApp.controller("TodoCtrl", ['$scope', '$http', '$interval', function ($scope, 
             priority: priority,
             collection: collection
         };
-        $http.post('http://localhost:8080/rest/api/todo.json', item).success(function (data) {
+        $http.post('http://localhost:8080/rest/todo.json', item).success(function (data) {
             for (var i = 0; i < $scope.groups.length; i++) {
                 if ($scope.groups[i].id == collection) {
                     $scope.groups[i].todos.push(data);
@@ -33,7 +36,7 @@ MyApp.controller("TodoCtrl", ['$scope', '$http', '$interval', function ($scope, 
     };
 
     $scope.addTodoGroup = function (data) {
-        $http.post('http://localhost:8080/rest/api/abcd.json', {
+        $http.post('http://localhost:8080/rest/abcd.json', {
             name: data,
             todoUser: userId,
             todos: []
@@ -45,7 +48,7 @@ MyApp.controller("TodoCtrl", ['$scope', '$http', '$interval', function ($scope, 
         });
     };
 
-    $http.get('http://localhost:8080/rest/api/user/' + userId + '.json').success(function (data) {
+    $http.get('http://localhost:8080/rest/user/' + userId + '.json').success(function (data) {
         $scope.groups = (data).todoGroup;
         console.log(JSON.stringify($scope.todoUser));
     }).error(function () {
@@ -54,7 +57,7 @@ MyApp.controller("TodoCtrl", ['$scope', '$http', '$interval', function ($scope, 
 
 
     $scope.deleteTodo = function (data, collection) {
-        $http.delete('http://localhost:8080/rest/api/todo/' + data.id + '.json').then(function () {
+        $http.delete('http://localhost:8080/rest/todo/' + data.id + '.json').then(function () {
             for (var i = 0; i < $scope.groups.length; i++) {
                 if ($scope.groups[i].id == collection.id) {
                     $scope.groups[i].todos.splice($scope.groups[i].todos.indexOf(data), 1)
@@ -64,14 +67,14 @@ MyApp.controller("TodoCtrl", ['$scope', '$http', '$interval', function ($scope, 
     };
 
     $scope.deleteTodoGroup = function (data) {
-        $http.delete('http://localhost:8080/rest/api/abcd/' + data.id + '.json').then(function () {
+        $http.delete('http://localhost:8080/rest/abcd/' + data.id + '.json').then(function () {
             $scope.groups.splice($scope.groups.indexOf(data), 1)
         });
     };
 
 
     $scope.checkBoxClick = function (check) {
-        $http.put('http://localhost:8080/rest/api/todo/' + check.id + '.json', {
+        $http.put('http://localhost:8080/rest/todo/' + check.id + '.json', {
             completed: !(check.completed)
         }).success(function () {
             console.log(check.completed);
@@ -81,7 +84,7 @@ MyApp.controller("TodoCtrl", ['$scope', '$http', '$interval', function ($scope, 
     };
 
     $scope.getTodo = function (item) {
-        $http.get('http://localhost:8080/rest/api/todo/' + item.id + '.json').success(function (data) {
+        $http.get('http://localhost:8080/rest/todo/' + item.id + '.json').success(function (data) {
             console.log(JSON.stringify(data));
             alert(data.id);
             alert(data.task);

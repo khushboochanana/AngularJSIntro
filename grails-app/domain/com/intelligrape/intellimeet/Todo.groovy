@@ -4,7 +4,7 @@ import org.springframework.security.access.annotation.Secured
 
 import grails.rest.Resource
 //@Secured('permitAll')
-@Resource(uri = "/rest/api/todo", formats = ['json', 'xml'])
+@Resource(uri = "/rest/todo", formats = ['json', 'xml'])
 class Todo {
     String task
     Boolean completed = false

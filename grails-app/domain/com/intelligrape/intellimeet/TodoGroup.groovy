@@ -5,7 +5,7 @@ import grails.rest.Resource
 
 //@Secured('permitAll')
 
-@Resource(uri = "/rest/api/abcd", formats = ['json', 'xml'])
+@Resource(uri = "/rest/abcd", formats = ['json', 'xml'])
 class TodoGroup {
     String ownedBy = 'Khushboo'
     String name
