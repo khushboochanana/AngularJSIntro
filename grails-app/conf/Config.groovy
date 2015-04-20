@@ -143,8 +143,7 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
         '/todoGroup/**'  : ['ROLE_ADMIN'],
         '/toDoUser/**'   : ['ROLE_ADMIN'],
         '/todoApp'       : ['ROLE_ADMIN'],
-        '/todoLogin/**'  : ['permitAll'],
-        '/rest/**'       : ['permitAll']
+        '/todoLogin/**'  : ['permitAll']
 ]
 
 
@@ -153,10 +152,8 @@ grails.plugin.springsecurity.filterChain.chainMap = [
         '/**'     : 'JOINED_FILTERS,-restTokenValidationFilter,-restExceptionTranslationFilter'                                                                          // Traditional chain
 ]
 
-//grails.plugin.springsecurity.rest.token.validation.useBearerToken = false
-
 grails.plugin.springsecurity.rest.login.active = true
-grails.plugin.springsecurity.rest.login.endpointUrl = '/api/login'
+grails.plugin.springsecurity.rest.login.endpointUrl = '/rest/login'
 grails.plugin.springsecurity.rest.logout.endpointUrl = '/rest/logout'
 grails.plugin.springsecurity.rest.login.usernamePropertyName = 'username'
 grails.plugin.springsecurity.rest.login.passwordPropertyName = 'password'

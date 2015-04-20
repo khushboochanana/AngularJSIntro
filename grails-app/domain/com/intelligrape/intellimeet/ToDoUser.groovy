@@ -13,9 +13,9 @@ class ToDoUser {
     String email
     String password
     boolean enabled = true
-    boolean accountExpired
-    boolean accountLocked
-    boolean passwordExpired
+    boolean accountExpired = false
+    boolean accountLocked = false
+    boolean passwordExpired = false
     static hasMany = [todoGroup: TodoGroup]
     static transients = ['springSecurityService']
 

@@ -1,13 +1,34 @@
-
-
-
 var MyApp = angular.module('todoApp', []);
 
 
-MyApp.controller("TodoCtrl", ['$scope', '$http', '$interval', function ($scope, $http, $interval) {
+MyApp.controller("LoginCtrl", ['$scope', '$http', function ($scope, $http) {
+
+    $scope.getToken = function (username, password) {
+
+        alert(username);
+        $http.post("http://localhost:8080/rest/login", {
+            username: username,
+            password: password
+        }).success(function (data) {
+            console.log(JSON.stringify(data));
+            console.log(data.access_token);
+            localStorage["authToken"] = data.access_token;
+            $scope.goBack = function () {
+                $location.path("/login");
+            }
+        }).error(function () {
+            alert("Error h Error")
+        });
+    };
+}]);
+function getLocalToken() {
+    return localStorage["authToken"];
+}
+MyApp.controller("TodoCtrl", ['$scope', '$http', function ($scope, $http) {
 
     var TodoList = function () {
-        $http.get('http://localhost:8080/rest/todo.json').success(function (data) {
+
+        $http.get('http://localhost:8080/rest/todo?access_token=' + getLocalToken()).success(function (data) {
             $scope.todo = (data);
             return $scope.todo
         }).error(function () {
@@ -23,7 +44,7 @@ MyApp.controller("TodoCtrl", ['$scope', '$http', '$interval', function ($scope, 
             priority: priority,
             collection: collection
         };
-        $http.post('http://localhost:8080/rest/todo.json', item).success(function (data) {
+        $http.post('http://localhost:8080/rest/todo?access_token=' + getLocalToken(), item).success(function (data) {
             for (var i = 0; i < $scope.groups.length; i++) {
                 if ($scope.groups[i].id == collection) {
                     $scope.groups[i].todos.push(data);
@@ -36,19 +57,20 @@ MyApp.controller("TodoCtrl", ['$scope', '$http', '$interval', function ($scope, 
     };
 
     $scope.addTodoGroup = function (data) {
-        $http.post('http://localhost:8080/rest/abcd.json', {
-            name: data,
-            todoUser: userId,
-            todos: []
-        }).success(function (data) {
+        $http.post('http://localhost:8080/rest/abcd?access_token=' + getLocalToken(), {
+                name: data,
+                todoUser: userId,
+                todos: []
+            }
+        ).
+            success(function (data) {
 
-            $scope.groups.push(data);
-        }).error(function () {
-            alert("Some Error Occurred")
-        });
+                $scope.groups.push(data);
+            }).error(function () {
+                alert("Some Error Occurred")
+            });
     };
-
-    $http.get('http://localhost:8080/rest/user/' + userId + '.json').success(function (data) {
+    $http.get('http://localhost:8080/rest/user/' + userId + '?access_token=' + getLocalToken()).success(function (data) {
         $scope.groups = (data).todoGroup;
         console.log(JSON.stringify($scope.todoUser));
     }).error(function () {
@@ -57,7 +79,7 @@ MyApp.controller("TodoCtrl", ['$scope', '$http', '$interval', function ($scope, 
 
 
     $scope.deleteTodo = function (data, collection) {
-        $http.delete('http://localhost:8080/rest/todo/' + data.id + '.json').then(function () {
+        $http.delete('http://localhost:8080/rest/todo/' + data.id + '?access_token=' + getLocalToken()).then(function () {
             for (var i = 0; i < $scope.groups.length; i++) {
                 if ($scope.groups[i].id == collection.id) {
                     $scope.groups[i].todos.splice($scope.groups[i].todos.indexOf(data), 1)
@@ -67,14 +89,14 @@ MyApp.controller("TodoCtrl", ['$scope', '$http', '$interval', function ($scope, 
     };
 
     $scope.deleteTodoGroup = function (data) {
-        $http.delete('http://localhost:8080/rest/abcd/' + data.id + '.json').then(function () {
+        $http.delete('http://localhost:8080/rest/abcd/' + data.id + '?access_token=' + getLocalToken()).then(function () {
             $scope.groups.splice($scope.groups.indexOf(data), 1)
         });
     };
 
 
     $scope.checkBoxClick = function (check) {
-        $http.put('http://localhost:8080/rest/todo/' + check.id + '.json', {
+        $http.put('http://localhost:8080/rest/todo/' + check.id + '?access_token=' + getLocalToken(), {
             completed: !(check.completed)
         }).success(function () {
             console.log(check.completed);
@@ -84,16 +106,15 @@ MyApp.controller("TodoCtrl", ['$scope', '$http', '$interval', function ($scope, 
     };
 
     $scope.getTodo = function (item) {
-        $http.get('http://localhost:8080/rest/todo/' + item.id + '.json').success(function (data) {
+        $http.get('http://localhost:8080/rest/todo/' + item.id + '?access_token=' + getLocalToken()).success(function (data) {
             console.log(JSON.stringify(data));
             alert(data.id);
             alert(data.task);
             $scope.todo = data;
         });
     };
-
-
-}]);
+}])
+;
 
 
 MyApp.directive("color", function () {

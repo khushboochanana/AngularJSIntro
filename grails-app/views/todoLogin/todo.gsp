@@ -1,13 +1,23 @@
+<%@ page import="com.intelligrape.intellimeet.Todo; com.intelligrape.intellimeet.TodoGroup; com.intelligrape.intellimeet.Priority" %>
 <html>
 <head>
     <title>TODO APPLICATION</title>
     <meta name="layout" content="main"/>
-
     <asset:javascript src="angular-1.2.16.js"/>
-
     <asset:javascript src="todoApp.js"/>
+    <style>
+    .ng-invalid.ng-dirty {
+        border-color: #FA787E;
+    }
 
-    <style type='text/css' media='screen'>
+    .ng-valid.ng-dirty {
+        border-color: #78FA89;
+    }
+
+    .strikethrough {
+        text-decoration: line-through
+    }
+
     #login {
         margin: 15px 0px;
         padding: 0px;
@@ -87,59 +97,11 @@
         height: 12px;
     }
     </style>
-
 </head>
 
 <body>
-<div class="row" ng-controller="LoginCtrl">
-    <div class="col-md-6">
-        <div id='login'>
-            <div class='inner'>
-                <div class='fheader'>Please Login</div>
-
-                <g:if test='${flash.message}'>
-                    <div class='login_message'>${flash.message}</div>
-
-                </g:if>
-
-                <form method='POST' action="${postUrl}" class='loginForm cssform' id='loginForm' autocomplete='off'
-                      ng-submit="getToken(username,password)">
-                    <p>
-                        <label for='j_username'>UserName:</label>
-                        <input type='text' class='text_' name='j_username' id='j_username' ng-model="username"/>
-                    </p>
-
-                    <p>
-                        <label for='j_password'>Password:</label>
-                        <input type='password' class='text_' name='j_password' id='j_password' ng-model="password"/>
-                    </p>
-
-                    <p id="remember_me_holder">
-                        <input type='checkbox' class='chk' name='${rememberMeParameter}' id='remember_me'
-                               <g:if test='${hasCookie}'>checked='checked'</g:if>/>
-                        <label for='remember_me'>remember me</label>
-                    </p>
-
-                    <p>
-                        <input type='submit' value='Login'/>
-                    </p>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-6">
-        <g:render template="/todoLogin/register"/>
-
-    </div>
+<div ng-view>
 
 </div>
-<script type='text/javascript'>
-    <!--
-    (function () {
-        document.forms['loginForm'].elements['j_username'].focus();
-    })();
-    // -->
-</script>
 </body>
 </html>

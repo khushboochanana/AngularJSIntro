@@ -5,6 +5,8 @@
     <title>Dashboard</title>
     <meta name="layout" content="main"/>
     <asset:javascript src="angular-1.2.16.js"/>
+    <asset:javascript src="login.js"/>
+
     <asset:javascript src="todoApp.js"/>
     <style>
     .ng-invalid.ng-dirty {
@@ -49,7 +51,6 @@
 
                     <div class="form-group" ng-show="tab===1">
                         <form name="createTodo" ng-submit="addTodoGroup(group.name)" invalidate>
-
                             <label>TODO Group Name</label>
                             <input name="task" class="form-control" placeholder="Enter text" ng-model="group.name"
                                    name-unique
