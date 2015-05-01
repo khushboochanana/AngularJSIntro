@@ -7,7 +7,7 @@ class UrlMappings {
             }
         }
 
-        "/"(view:"/todoApp")
+        "/"(view:"/todoLogin/todo")
         "500"(view:'/error')
 	}
 }

@@ -1,11 +1,33 @@
-var MyApp = angular.module('todoApp', []);
+var MyApp = angular.module('todoApp', ['ui.router']).config(['$stateProvider', function ($stateProvider) {
+    $stateProvider
+        .state('login', {
+            views: {
+                "modal": {
+                    templateUrl: "/todoLogin/todoApp",
+                    controller: 'TodoCtrl'
+                }
+            }
+        });
+}]);
+
+/*.config(['$routeProvider', '$locationProvider',
+
+ function ($routeProvider, $locationProvider) {
+ $routeProvider
+ .when('/', {
+ templateUrl: '/todoLogin/login',
+ controller: 'LoginCtrl'
+ })
+ .when('/todoLogin/login', {
+ templateUrl: '/todoLogin/todoApp',
+ controller: 'TodoCtrl'
+ });
+ $locationProvider.html5Mode(true);
+ }]);*/
 
 
-MyApp.controller("LoginCtrl", ['$scope', '$http', function ($scope, $http) {
-
+MyApp.controller("LoginCtrl", ['$scope', '$http', '$location', '$state', function ($scope, $http, $location, $state) {
     $scope.getToken = function (username, password) {
-
-        alert(username);
         $http.post("http://localhost:8080/rest/login", {
             username: username,
             password: password
@@ -13,28 +35,45 @@ MyApp.controller("LoginCtrl", ['$scope', '$http', function ($scope, $http) {
             console.log(JSON.stringify(data));
             console.log(data.access_token);
             localStorage["authToken"] = data.access_token;
-            $scope.goBack = function () {
-                $location.path("/login");
-            }
+            localStorage['username'] = data.username;
+            $state.go("login")
         }).error(function () {
             alert("Error h Error")
         });
+
+        $http.get('http://localhost:8080/rest/user/?access_token=' + localStorage["authToken"]).success(function (data) {
+            console.log(JSON.stringify(data));
+            for (var i = 0; i < data.length; i++) {
+                if (data[i].username == localStorage['username']) {
+                    localStorage['userId'] = data[i].id;
+                }
+            }
+        });
     };
 }]);
+
 function getLocalToken() {
     return localStorage["authToken"];
 }
+
+function getUserName() {
+    return localStorage["username"];
+}
+function getUserId() {
+    return localStorage["userId"];
+}
+
 MyApp.controller("TodoCtrl", ['$scope', '$http', function ($scope, $http) {
-
-    var TodoList = function () {
-
-        $http.get('http://localhost:8080/rest/todo?access_token=' + getLocalToken()).success(function (data) {
-            $scope.todo = (data);
-            return $scope.todo
-        }).error(function () {
-            alert("Some Error Occurred")
-        });
-    };
+    $scope.userName = getUserName();
+    //var TodoList = function () {
+    //
+    //    $http.get('http://localhost:8080/rest/todo?access_token=' + getLocalToken()).success(function (data) {
+    //        $scope.todo = (data);
+    //        return $scope.todo
+    //    }).error(function () {
+    //        alert("Some Error Occurred")
+    //    });
+    //};
 
 
     $scope.addTodo = function (data, priority, collection) {
@@ -57,20 +96,20 @@ MyApp.controller("TodoCtrl", ['$scope', '$http', function ($scope, $http) {
     };
 
     $scope.addTodoGroup = function (data) {
+        alert("oyeeee");
         $http.post('http://localhost:8080/rest/abcd?access_token=' + getLocalToken(), {
                 name: data,
-                todoUser: userId,
+                todoUser: getUserId(),
                 todos: []
             }
         ).
             success(function (data) {
-
                 $scope.groups.push(data);
             }).error(function () {
                 alert("Some Error Occurred")
             });
     };
-    $http.get('http://localhost:8080/rest/user/' + userId + '?access_token=' + getLocalToken()).success(function (data) {
+    $http.get('http://localhost:8080/rest/user/' + getUserId() + '?access_token=' + getLocalToken()).success(function (data) {
         $scope.groups = (data).todoGroup;
         console.log(JSON.stringify($scope.todoUser));
     }).error(function () {
@@ -105,16 +144,14 @@ MyApp.controller("TodoCtrl", ['$scope', '$http', function ($scope, $http) {
         });
     };
 
-    $scope.getTodo = function (item) {
-        $http.get('http://localhost:8080/rest/todo/' + item.id + '?access_token=' + getLocalToken()).success(function (data) {
-            console.log(JSON.stringify(data));
-            alert(data.id);
-            alert(data.task);
-            $scope.todo = data;
-        });
-    };
-}])
-;
+    //$scope.getTodo = function (item) {
+    //    $http.get('http://localhost:8080/rest/todo/' + item.id + '?access_token=' + getLocalToken()).success(function (data) {
+    //        console.log(JSON.stringify(data));
+    //        alert("or sab badhiya");
+    //        $scope.todo = data;
+    //    });
+    //};
+}]);
 
 
 MyApp.directive("color", function () {

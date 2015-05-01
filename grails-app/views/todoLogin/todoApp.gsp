@@ -1,38 +1,8 @@
-<!DOCTYPE html>
-<%@ page import="com.intelligrape.intellimeet.Todo; com.intelligrape.intellimeet.TodoGroup; com.intelligrape.intellimeet.Priority" %>
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <title>Dashboard</title>
-    <meta name="layout" content="main"/>
-    <asset:javascript src="angular-1.2.16.js"/>
-    <asset:javascript src="login.js"/>
-
-    <asset:javascript src="todoApp.js"/>
-    <style>
-    .ng-invalid.ng-dirty {
-        border-color: #FA787E;
-    }
-
-    .ng-valid.ng-dirty {
-        border-color: #78FA89;
-    }
-
-    .strikethrough {
-        text-decoration: line-through
-    }
-    </style>
-</head>
-
-<body>
-<script>
-
-    var userId =${sec.loggedInUserInfo(field:"id")};
-</script>
-
-<div id="page-wrapper" ng-controller="TodoCtrl">
+<div id="page-wrapper">
     <div class="row">
+        ${sec.loggedInUserInfo(field: "id")}
         <div class="col-lg-12">
-            <h1>${sec.loggedInUserInfo(field: "username")}  TODO's
+            <h1>{{userName}}  TODO's
                 <small>A Blank Slate</small>
             </h1>
         </div>
@@ -85,8 +55,7 @@
             </div>
         </div>
 
-        %{--<div ng-repeat="group in groups| filter:group"></div>--}%
-
+        <div ng-repeat="group in groups| filter:group"></div>
 
 
         <div class="col-md-6">
@@ -151,5 +120,3 @@
 
     </div>
 </div>
-</body>
-</html>

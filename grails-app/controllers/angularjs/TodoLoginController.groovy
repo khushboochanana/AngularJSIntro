@@ -34,12 +34,9 @@ class TodoLoginController extends LoginController {
         println(">>>>>>>>>>>>>>>>>>>>>>>..............................>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
 //        println(springSecurityService.currentUser)
 
-        render(view: '/todoApp');
+        render(view: '/todoLogin/todoApp');
     }
 
-    def todo() {
-        render(view: 'todo')
-    }
 
     def login() {
         println(">>>>>>>>>>>>>>>>>>>>>>>Login>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
@@ -47,7 +44,7 @@ class TodoLoginController extends LoginController {
         def config = SpringSecurityUtils.securityConfig
         String postUrl = "${request.contextPath}${config.apf.filterProcessesUrl}"
         println(postUrl)
-        render view: '/todoLogin/login', model: [postUrl            : postUrl,
+        render view: '/todoLogin/todo', model: [postUrl            : postUrl,
                                                  rememberMeParameter: config.rememberMe.parameter]
     }
 }

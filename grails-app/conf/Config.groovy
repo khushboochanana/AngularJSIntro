@@ -116,14 +116,14 @@ log4j.main = {
             'org.springframework',
             'org.hibernate',
             'net.sf.ehcache.hibernate'
-    debug 'org.springframework.security'
-    debug 'grails.plugin.springsecurity.rest'
+//    debug 'org.springframework.security'
+//    debug 'grails.plugin.springsecurity.rest'
 }
 
 // Added by the Spring Security Core plugin:
 
 
-grails.plugin.springsecurity.auth.loginFormUrl = '/todoLogin/login'
+grails.plugin.springsecurity.auth.loginFormUrl = '/todoLogin/todo'
 grails.plugin.springsecurity.successHandler.alwaysUseDefault = true
 grails.plugin.springsecurity.failureHandler.defaultFailureUrl = '/todoLogin/todoApp'
 grails.plugin.springsecurity.successHandler.defaultTargetUrl = '/'
@@ -142,8 +142,7 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
         '/todo/**'       : ['ROLE_ADMIN'],
         '/todoGroup/**'  : ['ROLE_ADMIN'],
         '/toDoUser/**'   : ['ROLE_ADMIN'],
-        '/todoApp'       : ['ROLE_ADMIN'],
-        '/todoLogin/**'  : ['permitAll']
+        '/todoLogin/**'  : ['permitAll'],
 ]
 
 
